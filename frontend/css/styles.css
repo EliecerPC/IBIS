@@ -1,4 +1,69 @@
+/*Configuración general*/
 body {
     font-family: Arial, sans-serif;
-    margin: 40px;
+    margin: 0;
+    background-color: #f4f6f8;
+    color: #1f2937;
+}
+
+/*Encabezado*/
+.header {
+    background-color: #1e3a5f;
+    color: white;
+    text-align: center;
+    padding: 30px 20px;
+}
+
+.header h1 {
+    margin: 0;
+    font-size: 40px;
+}
+
+.header p {
+    margin: 9px 0 0;
+    font-size: 18px;
+}
+
+/*Contenido principal*/
+.main {
+    max-width: 900px;
+    margin: 50px auto;
+    padding: 0 20px;
+}
+
+/*Sección de bienvenida*/
+.welcome {
+    background-color: white;
+    text-align: center;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.welcome h2 {
+    margin-top: 0;
+    font-size: 28px;
+}
+
+/*Botón*/
+.welcome button {
+    margin-top: 20px;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 6px;
+    background-color: #2563eb;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.welcome button:hover {
+    background-color: #1d4ed8;
+}
+
+/*Pie de página*/
+.footer {
+    text-align: center;
+    padding: 20px;
+    color: #6b7280;
 }
