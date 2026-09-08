@@ -19,13 +19,106 @@
 
     <main class="main">
         <section class="welcome">
-            <h2>Bienvenido a IBIS</h2>
+            <h2>Registrar equipo</h2>
 
-            <p>
-                Sistema para la gestión y consulta del inventario de equipos tecnológicos del CAT de Girardot.
-            </p>
+            <form id="formEquipo">
 
-            <button id="btnIngresar">Ingresar al Sistema</button>
+                <div class="campo">
+                    <label for="codigo">Código</label>
+                    <input
+                        type="text"
+                        id="codigo"
+                        name="codigo"
+                        maxlength="30"
+                        required
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="nombre">Nombre</label>
+                    <input 
+                        type="text"
+                        id="nombre"
+                        name="nombre"
+                        maxlength="100"
+                        required
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="tipo">Tipo</label>
+                    <input 
+                        type="text"
+                        id="tipo"
+                        name="tipo"
+                        maxlength="50"
+                        required
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="marca">Marca</label>
+                    <input
+                        type="text"
+                        id="marca"
+                        name="marca"
+                        maxlength="50"
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="modelo">Modelo</label>
+                    <input
+                        type="text"
+                        id="modelo"
+                        name="modelo"
+                        maxlength="100"
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="serial">Serial</label>
+                    <input
+                        type="text"
+                        id="serial"
+                        name="serial"
+                        maxlength="100"
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="estado">Estado</label>
+                    <input
+                        type="text"
+                        id="estado"
+                        name="estado"
+                        maxlength="30"
+                        required
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="ubicacion">Ubicación</label>
+                    <input
+                        type="text"
+                        id="ubicacion"
+                        name="ubicacion"
+                        maxlength="100"
+                        required
+                    >
+                </div>
+
+                <div class="campo">
+                    <label for="observaciones">Observaciones</label>
+                    <textarea
+                        id="observaciones"
+                        name="observaciones"
+                    ></textarea>
+                </div>
+
+                <button type="submit">Guardar equipo</button>
+
+            </form>
 
         </section>
     </main>
