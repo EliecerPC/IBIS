@@ -131,3 +131,26 @@ body {
         grid-column: 1;
     }
 }
+
+#tablaEquipos {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th, td {
+    border: 1px solid #d1d5db;
+    padding: 10px;
+}
+
+th {
+    background-color: #6fa4e4;
+    text-align: center;
+}
+
+td {
+    text-align: center;
+}
+
+tr:hover{
+    background-color: #6fa4e4;
+}

@@ -1,7 +1,10 @@
 const express = require('express');
 const pool = require('./db');
+const cors = require('cors');
 
 const app = express();
+app.use(cors());
+
 
 const PORT = 3000;
 
@@ -18,6 +21,27 @@ app.get('/', (req, res) => {
 // Iniciar servidor
 app.listen(PORT, () => {
     console.log(`Servidor de IBIS ejecutándose en http://localhost:${PORT}`);
+});
+
+// Consultar todos los equipos
+app.get('/api/equipos', async (req, res) => {
+
+    try {
+
+        const result = await pool.query('SELECT * FROM equipo');
+
+        res.json(result.rows);
+
+    } catch (error) {
+
+        console.error('Error al obtener los equipos:', error);
+
+        res.status(500).json({
+            error: 'Error al obtener los equipos'
+        });
+
+    }
+
 });
 
 // Registrar un nuevo equipo
