@@ -108,12 +108,43 @@ botonConsultar.addEventListener('click', async function() {
         celdaUbicacion.textContent = equipo.ubicacion;
         fila.appendChild(celdaUbicacion);
 
+        const celdaObservaciones = document.createElement('td');
+        celdaObservaciones.textContent = equipo.observaciones;
+        fila.appendChild(celdaObservaciones);
+
         const celdaAcciones = document.createElement('td');
         const botonAcciones = document.createElement('button');
         botonAcciones.textContent = "Editar";
         celdaAcciones.appendChild(botonAcciones);
         fila.appendChild(celdaAcciones);
         botonAcciones.dataset.id = equipo.id_equipo; 
+
+        const botonEliminar = document.createElement('button');
+        botonEliminar.textContent = "Eliminar";
+        celdaAcciones.appendChild(botonEliminar);
+        botonEliminar.dataset.id = equipo.id_equipo;
+        
+
+
+        botonEliminar.addEventListener('click', async function (event) {
+            const id = event.target.dataset.id;
+
+            const confirmar = confirm("¿Está seguro de eliminar este equipo?");
+            if (confirmar === true){
+                const respuesta = await fetch('http://localhost:3000/api/equipos/' + id,{
+                    method: "DELETE"
+                });
+                const resultado = await respuesta.json();
+
+                if (respuesta.ok){
+                    alert(resultado.mensaje);
+                    const fila = event.target.parentElement.parentElement;
+
+                    fila.remove();
+
+                }
+            }
+        });
 
 
         botonAcciones.addEventListener('click', async function (event) {

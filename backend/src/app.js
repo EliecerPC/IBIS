@@ -115,6 +115,30 @@ app.put('/api/equipos/:id', async (req, res) => {
 
 });
 
+//Eliminar un registro
+app.delete('/api/equipos/:id', async (req, res) => {
+
+    try{
+
+        const id = req.params.id;
+
+        const result = await pool.query(
+            'DELETE FROM equipo WHERE id_equipo = $1', [id]
+        );
+
+        res.status(200).json({
+            mensaje: 'Equipo eliminado correctamente'
+        });
+
+    } catch (error){
+        console.error('Error al eliminar el equipo:', error.message);
+
+        res.status(500).json({
+            error: 'Error al eliminar el equipo'
+        });
+    }
+});
+
 // Registrar un nuevo equipo
 app.post('/api/equipos', async (req, res) => {
 
