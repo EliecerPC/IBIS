@@ -2,6 +2,10 @@ console.log("Frontend de IBIS funcionando");
 
 /*Capturar los datos del formulario*/
 const formulario = document.getElementById('formEquipo');
+const botonFormulario = document.getElementById('btnGuardar');
+const tituloFormulario = document.getElementById('id_h2');
+
+let idEditando = null;
 
 formulario.addEventListener('submit', async function(event) {
 
@@ -11,10 +15,23 @@ formulario.addEventListener('submit', async function(event) {
 
     const equipo = Object.fromEntries(datos.entries());
 
+    let metodo;
+    let url;
+
+    if (idEditando === null){
+        metodo = "POST";
+        url = 'http://localhost:3000/api/equipos';
+        console.log("Registrar");
+    } else{
+        metodo = "PUT";
+        url = 'http://localhost:3000/api/equipos/' + idEditando;
+        console.log("Editar");
+    }
+
     try {
 
-        const respuesta = await fetch('http://localhost:3000/api/equipos', {
-            method: 'POST',
+        const respuesta = await fetch(url, {
+            method: metodo,
             headers: {
                 'Content-Type': 'application/json'
             },
@@ -28,6 +45,10 @@ formulario.addEventListener('submit', async function(event) {
             alert(resultado.mensaje);
 
             formulario.reset();
+
+            idEditando = null;
+            botonFormulario.textContent = "Guardar equipo";
+            tituloFormulario.textContent = "Registrar equipo";
 
         } else {
 
@@ -86,6 +107,57 @@ botonConsultar.addEventListener('click', async function() {
         const celdaUbicacion = document.createElement('td');
         celdaUbicacion.textContent = equipo.ubicacion;
         fila.appendChild(celdaUbicacion);
+
+        const celdaAcciones = document.createElement('td');
+        const botonAcciones = document.createElement('button');
+        botonAcciones.textContent = "Editar";
+        celdaAcciones.appendChild(botonAcciones);
+        fila.appendChild(celdaAcciones);
+        botonAcciones.dataset.id = equipo.id_equipo; 
+
+
+        botonAcciones.addEventListener('click', async function (event) {
+            const id = event.target.dataset.id;
+            idEditando = id;
+            botonFormulario.textContent = "Actualizar equipo";
+            tituloFormulario.textContent = "Editar equipo";
+
+            console.log('ID editando:', idEditando);
+
+            const respuesta = await fetch('http://localhost:3000/api/equipos/' + id);
+            const resultado = await respuesta.json();
+
+            const equipo = resultado[0];
+
+            const campoCodigo = document.getElementById('codigo');
+            campoCodigo.value = equipo.codigo;
+
+            const campoNombre = document.getElementById('nombre');
+            campoNombre.value = equipo.nombre;
+
+            const campoTipo = document.getElementById('tipo');
+            campoTipo.value = equipo.tipo;
+
+            const campoMarca = document.getElementById('marca');
+            campoMarca.value = equipo.marca;
+
+            const campoModelo = document.getElementById('modelo');
+            campoModelo.value = equipo.modelo;
+
+            const campoSerial = document.getElementById('serial');
+            campoSerial.value = equipo.serial;
+
+            const campoEstado = document.getElementById('estado');
+            campoEstado.value = equipo.estado;
+
+            const campoUbicacion = document.getElementById('ubicacion');
+            campoUbicacion.value = equipo.ubicacion;
+
+            const campoObservaciones = document.getElementById('observaciones');
+            campoObservaciones.value = equipo.observaciones;
+
+            console.log(equipo);
+        });
         
         cuerpoTabla.appendChild(fila);
     });

@@ -44,6 +44,77 @@ app.get('/api/equipos', async (req, res) => {
 
 });
 
+app.get('/api/equipos/:id', async (req, res) =>{
+    const id = req.params.id;
+    const result = await pool.query('SELECT * FROM equipo WHERE id_equipo = $1', [id]);
+
+    res.json(result.rows);
+});
+
+//Editar un registro
+app.put('/api/equipos/:id', async (req, res) => {
+
+    try{
+
+        const id = req.params.id;
+
+        const {
+                codigo,
+                nombre,
+                tipo,
+                marca,
+                modelo,
+                serial,
+                estado,
+                ubicacion,
+                observaciones
+            } = req.body;
+
+        const result = await pool.query(
+            `UPDATE equipo
+            SET codigo = $1,
+                nombre = $2,
+                tipo = $3,
+                marca = $4,
+                modelo = $5,
+                serial = $6,
+                estado = $7,
+                ubicacion = $8,
+                observaciones = $9
+                WHERE id_equipo = $10
+                RETURNING *`,
+                [
+                    codigo,
+                    nombre,
+                    tipo,
+                    marca,
+                    modelo,
+                    serial,
+                    estado,
+                    ubicacion,
+                    observaciones,
+                    id
+                ]
+        );
+
+        console.log(result.rows);
+
+        res.status(200).json({
+            mensaje: 'Equipo actualizado correctamente',
+            equipo: result.rows[0]
+        });
+    
+    } catch (error) {
+
+        console.error('Error al actualizar el equipo:', error.message);
+
+        res.status(500).json({
+            error: 'Error al actualizar el equipo'
+        });
+    }
+
+});
+
 // Registrar un nuevo equipo
 app.post('/api/equipos', async (req, res) => {
 
