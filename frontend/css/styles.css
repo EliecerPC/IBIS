@@ -132,6 +132,83 @@ body {
     }
 }
 
+/* Barra de búsqueda y filtros */
+.filtros {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    gap: 16px;
+    margin: 20px 0;
+}
+
+.campo-busqueda {
+    display: flex;
+    flex: 1 1 280px;
+}
+
+.campo-busqueda input {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px 0 0 6px;
+    font-size: 15px;
+}
+
+.campo-busqueda button {
+    padding: 10px 14px;
+    border: none;
+    border-radius: 0 6px 6px 0;
+    background-color: #2563eb;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+}
+
+.campo-busqueda button:hover {
+    background-color: #1d4ed8;
+}
+
+.campo-filtro {
+    display: flex;
+    flex-direction: column;
+    min-width: 150px;
+}
+
+.campo-filtro label {
+    margin-bottom: 6px;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+.campo-filtro select {
+    padding: 10px;
+    border: 1px solid #d1d5db;
+    border-radius: 6px;
+    font-size: 15px;
+    background-color: white;
+}
+
+#btnLimpiarFiltros {
+    padding: 10px 16px;
+    border: 1px solid #2563eb;
+    border-radius: 6px;
+    background-color: white;
+    color: #2563eb;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+#btnLimpiarFiltros:hover {
+    background-color: #eff6ff;
+}
+
+@media (max-width: 600px) {
+    .filtros {
+        flex-direction: column;
+        align-items: stretch;
+    }
+}
+
 #tablaEquipos {
     width: 100%;
     border-collapse: collapse;

@@ -125,7 +125,34 @@
 
         <section class="listado">
             <h2>Equipos registrados</h2>
-            <button id="btnConsultar">Consultar equipos</button>
+
+            <div class="filtros">
+                <div class="campo-busqueda">
+                    <input
+                        type="text"
+                        id="buscar"
+                        placeholder="Buscar por código, nombre, serial, marca o modelo..."
+                    >
+                    <button id="btnBuscar" type="button" aria-label="Buscar">🔍</button>
+                </div>
+
+                <div class="campo-filtro">
+                    <label for="filtroTipo">Tipo</label>
+                    <select id="filtroTipo">
+                        <option value="">Todos</option>
+                    </select>
+                </div>
+
+                <div class="campo-filtro">
+                    <label for="filtroEstado">Estado</label>
+                    <select id="filtroEstado">
+                        <option value="">Todos</option>
+                    </select>
+                </div>
+
+                <button id="btnLimpiarFiltros" type="button">Limpiar filtros</button>
+            </div>
+
             <div id="listaEquipos">
                 <table id="tablaEquipos">
                     <thead>

@@ -23,12 +23,44 @@ app.listen(PORT, () => {
     console.log(`Servidor de IBIS ejecutándose en http://localhost:${PORT}`);
 });
 
-// Consultar todos los equipos
+// Consultar todos los equipos (con búsqueda y filtros opcionales)
 app.get('/api/equipos', async (req, res) => {
 
     try {
 
-        const result = await pool.query('SELECT * FROM equipo');
+        const { buscar, tipo, estado } = req.query;
+
+        let query = 'SELECT * FROM equipo WHERE 1=1';
+        const valores = [];
+
+        // Búsqueda por texto (código, nombre, serial, marca o modelo)
+        if (buscar) {
+            valores.push(`%${buscar}%`);
+            const posicion = valores.length;
+            query += ` AND (
+                codigo ILIKE $${posicion} OR
+                nombre ILIKE $${posicion} OR
+                serial ILIKE $${posicion} OR
+                marca ILIKE $${posicion} OR
+                modelo ILIKE $${posicion}
+            )`;
+        }
+
+        // Filtro por tipo
+        if (tipo) {
+            valores.push(tipo);
+            query += ` AND tipo = $${valores.length}`;
+        }
+
+        // Filtro por estado
+        if (estado) {
+            valores.push(estado);
+            query += ` AND estado = $${valores.length}`;
+        }
+
+        query += ' ORDER BY id_equipo DESC';
+
+        const result = await pool.query(query, valores);
 
         res.json(result.rows);
 

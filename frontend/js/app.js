@@ -50,6 +50,9 @@ formulario.addEventListener('submit', async function(event) {
             botonFormulario.textContent = "Guardar equipo";
             tituloFormulario.textContent = "Registrar equipo";
 
+            actualizarFiltrosDisponibles();
+            cargarEquipos();
+
         } else {
 
             alert('Error: ' + resultado.error);
@@ -66,16 +69,82 @@ formulario.addEventListener('submit', async function(event) {
 
 });
 
-const botonConsultar = document.getElementById('btnConsultar');
 const listaEquipos = document.getElementById('listaEquipos');
 const cuerpoTabla = document.getElementById('cuerpoTabla');
 
-botonConsultar.addEventListener('click', async function() {
+const campoBuscar = document.getElementById('buscar');
+const botonBuscar = document.getElementById('btnBuscar');
+const filtroTipo = document.getElementById('filtroTipo');
+const filtroEstado = document.getElementById('filtroEstado');
+const botonLimpiarFiltros = document.getElementById('btnLimpiarFiltros');
 
-    const respuesta = await fetch('http://localhost:3000/api/equipos');
+/* Evita disparar una consulta por cada tecla presionada */
+function debounce(fn, espera) {
+    let temporizador;
+    return function (...args) {
+        clearTimeout(temporizador);
+        temporizador = setTimeout(() => fn(...args), espera);
+    };
+}
+
+/* Llena los selects de Tipo y Estado con los valores únicos existentes */
+function actualizarOpcionesFiltro(equipos) {
+
+    const tiposUnicos = [...new Set(equipos.map(e => e.tipo).filter(Boolean))].sort();
+    const estadosUnicos = [...new Set(equipos.map(e => e.estado).filter(Boolean))].sort();
+
+    const tipoSeleccionado = filtroTipo.value;
+    const estadoSeleccionado = filtroEstado.value;
+
+    filtroTipo.innerHTML = '<option value="">Todos</option>' +
+        tiposUnicos.map(t => `<option value="${t}">${t}</option>`).join('');
+
+    filtroEstado.innerHTML = '<option value="">Todos</option>' +
+        estadosUnicos.map(e => `<option value="${e}">${e}</option>`).join('');
+
+    // Conserva la selección previa si el valor sigue existiendo
+    if (tiposUnicos.includes(tipoSeleccionado)) filtroTipo.value = tipoSeleccionado;
+    if (estadosUnicos.includes(estadoSeleccionado)) filtroEstado.value = estadoSeleccionado;
+}
+
+/* Consulta el backend aplicando los filtros actuales y dibuja la tabla */
+async function cargarEquipos() {
+
+    const params = new URLSearchParams();
+
+    if (campoBuscar.value.trim()) params.append('buscar', campoBuscar.value.trim());
+    if (filtroTipo.value) params.append('tipo', filtroTipo.value);
+    if (filtroEstado.value) params.append('estado', filtroEstado.value);
+
+    const respuesta = await fetch('http://localhost:3000/api/equipos?' + params.toString());
     const equipos = await respuesta.json();
 
+    renderizarTabla(equipos);
+
+    return equipos;
+}
+
+/* Consulta sin filtros, solo para mantener actualizadas las opciones de Tipo/Estado */
+async function actualizarFiltrosDisponibles() {
+    const respuesta = await fetch('http://localhost:3000/api/equipos');
+    const todos = await respuesta.json();
+    actualizarOpcionesFiltro(todos);
+}
+
+function renderizarTabla(equipos) {
+
     cuerpoTabla.textContent = ''; //hacer que la tabla se limpie
+
+    if (equipos.length === 0) {
+        const fila = document.createElement('tr');
+        const celda = document.createElement('td');
+        celda.colSpan = 9;
+        celda.textContent = 'No se encontraron equipos con esos criterios.';
+        celda.style.textAlign = 'center';
+        fila.appendChild(celda);
+        cuerpoTabla.appendChild(fila);
+        return;
+    }
 
     equipos.forEach(function(equipo){
         const fila = document.createElement('tr');
@@ -142,6 +211,8 @@ botonConsultar.addEventListener('click', async function() {
 
                     fila.remove();
 
+                    actualizarFiltrosDisponibles();
+
                 }
             }
         });
@@ -193,6 +264,34 @@ botonConsultar.addEventListener('click', async function() {
         cuerpoTabla.appendChild(fila);
     });
 
-    console.log(equipos);
+}
 
+/* Buscar al hacer clic en la lupa */
+botonBuscar.addEventListener('click', cargarEquipos);
+
+/* Buscar mientras se escribe, con una pequeña pausa (debounce) */
+campoBuscar.addEventListener('input', debounce(cargarEquipos, 400));
+
+/* Buscar también con la tecla Enter */
+campoBuscar.addEventListener('keydown', function (event) {
+    if (event.key === 'Enter') {
+        event.preventDefault();
+        cargarEquipos();
+    }
 });
+
+/* Filtrar al cambiar el select de Tipo o Estado */
+filtroTipo.addEventListener('change', cargarEquipos);
+filtroEstado.addEventListener('change', cargarEquipos);
+
+/* Limpiar todos los filtros y volver a mostrar el listado completo */
+botonLimpiarFiltros.addEventListener('click', function () {
+    campoBuscar.value = '';
+    filtroTipo.value = '';
+    filtroEstado.value = '';
+    cargarEquipos();
+});
+
+/* Carga inicial: opciones de filtro + listado completo */
+actualizarFiltrosDisponibles();
+cargarEquipos();
