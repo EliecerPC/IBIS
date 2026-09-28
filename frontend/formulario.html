@@ -1,0 +1,171 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>IBIS | Agregar equipo</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <header class="encabezado">
+        <h1>IBIS</h1>
+    </header>
+
+    <div class="contenedor">
+
+        <aside class="barra-lateral">
+
+            <a href="index.html" class="boton-menu">
+                Inicio
+            </a>
+
+            <a href="consultar.html" class="boton-menu">
+                Consultar
+            </a>
+
+            <a href="formulario.html" class="boton-menu activo">
+                Agregar equipo
+            </a>
+
+        </aside>
+
+        <main class="contenido-inventario">
+
+            <section class="welcome">
+
+                <h2 id="id_h2">Registrar equipo</h2>
+
+                <form id="formEquipo">
+
+                    <div class="campo">
+                        <label for="codigo">Código</label>
+
+                        <input
+                            type="text"
+                            id="codigo"
+                            name="codigo"
+                            maxlength="30"
+                            required
+                        >
+                    </div>
+
+                    <div class="campo">
+                        <label for="nombre">Nombre</label>
+
+                        <input
+                            type="text"
+                            id="nombre"
+                            name="nombre"
+                            maxlength="100"
+                            required
+                        >
+                    </div>
+
+                    <div class="campo">
+                        <label for="tipo">Tipo</label>
+
+                        <input
+                            type="text"
+                            id="tipo"
+                            name="tipo"
+                            maxlength="50"
+                            required
+                        >
+                    </div>
+
+                    <div class="campo">
+                        <label for="marca">Marca</label>
+
+                        <input
+                            type="text"
+                            id="marca"
+                            name="marca"
+                            maxlength="50"
+                        >
+                    </div>
+
+                    <div class="campo">
+                        <label for="modelo">Modelo</label>
+
+                        <input
+                            type="text"
+                            id="modelo"
+                            name="modelo"
+                            maxlength="100"
+                        >
+                    </div>
+
+                    <div class="campo">
+                        <label for="serial">Serial</label>
+
+                        <input
+                            type="text"
+                            id="serial"
+                            name="serial"
+                            maxlength="100"
+                        >
+                    </div>
+
+                    <div class="campo">
+                        <label for="estado">Estado</label>
+
+                        <input
+                            type="text"
+                            id="estado"
+                            name="estado"
+                            maxlength="30"
+                            required
+                        >
+                    </div>
+
+                    <div class="campo">
+                        <label for="ubicacion">Ubicación</label>
+
+                        <input
+                            type="text"
+                            id="ubicacion"
+                            name="ubicacion"
+                            maxlength="100"
+                            required
+                        >
+                    </div>
+
+                    <div class="campo">
+                        <label for="observaciones">Observaciones</label>
+
+                        <textarea
+                            id="observaciones"
+                            name="observaciones"
+                        ></textarea>
+                    </div>
+
+                    <button
+                        id="btnGuardar"
+                        type="submit"
+                    >
+                        Guardar equipo
+                    </button>
+
+                </form>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <!--<footer class="footer">
+        <p>Universidad del Tolima - CAT Girardot</p>
+    </footer>-->
+
+    <script src="js/app.js"></script>
+
+</body>
+
+</html>

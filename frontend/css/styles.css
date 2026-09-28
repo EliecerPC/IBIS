@@ -1,22 +1,64 @@
 /*Configuración general*/
+* {
+    box-sizing: border-box;
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Century Gothic", sans-serif;
     margin: 0;
     background-color: #f4f6f8;
     color: #1f2937;
 }
 
 /*Encabezado*/
-.header {
+.encabezado {
+    width: 100%;
+    height: 80px;
     background-color: #1e3a5f;
-    color: white;
-    text-align: center;
-    padding: 30px 20px;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
 }
 
-.header h1 {
+.encabezado h1 {
     margin: 0;
-    font-size: 40px;
+    color: #b9e8f3;
+    font-size: 36px;
+    letter-spacing: 2px;
+}
+
+.contenedor {
+    display: flex;
+    min-height: calc(100vh - 80px);
+}
+
+.barra-lateral {
+    width: 230px;
+    background-color: #2b5c8f;
+    padding: 25px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.boton-menu {
+    display: block;
+    padding: 13px 20px;
+    border-radius: 25px;
+    background-color: #0066ff;
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+    transition: 0.2s;
+}
+
+.boton-menu:hover {
+    background-color: #0052cc;
+    transform: translateX(3px);
+}
+
+.boton-menu.activo {
+    background-color: #0052cc;
 }
 
 .header p {
@@ -65,7 +107,8 @@ body {
 .footer {
     text-align: center;
     padding: 20px;
-    color: #6b7280;
+    color: #fff;
+    background-color: #2b5c8f;
 }
 
 /* Formulario de equipos */
@@ -113,6 +156,7 @@ body {
     color: white;
     font-size: 16px;
     cursor: pointer;
+    font-family: "Century Gothic", sans-serif;
 }
 
 #formEquipo button:hover {
@@ -139,6 +183,9 @@ body {
     align-items: flex-end;
     gap: 16px;
     margin: 20px 0;
+    background-color: #dbeafe; 
+    padding: 16px;
+    border-radius: 16px;
 }
 
 .campo-busqueda {
@@ -149,15 +196,24 @@ body {
 .campo-busqueda input {
     flex: 1;
     padding: 10px 12px;
-    border: 1px solid #d1d5db;
-    border-radius: 6px 0 0 6px;
+    
+    border: 2px solid #2563eb;  
+    border-right: none;         
+    border-radius: 10px 0 0 10px; 
     font-size: 15px;
+    outline: none;
+
+    font-family: "Century Gothic", sans-serif;
+}
+
+.campo-busqueda input:focus {
+    border-color: #1d4ed8;
 }
 
 .campo-busqueda button {
     padding: 10px 14px;
     border: none;
-    border-radius: 0 6px 6px 0;
+    border-radius: 0 10px 10px 0;
     background-color: #2563eb;
     color: white;
     font-size: 16px;
@@ -166,6 +222,7 @@ body {
 
 .campo-busqueda button:hover {
     background-color: #1d4ed8;
+    border-color: #1d4ed8;
 }
 
 .campo-filtro {
@@ -178,6 +235,7 @@ body {
     margin-bottom: 6px;
     font-weight: bold;
     font-size: 14px;
+    font-family: "Century Gothic", sans-serif;
 }
 
 .campo-filtro select {
@@ -186,10 +244,12 @@ body {
     border-radius: 6px;
     font-size: 15px;
     background-color: white;
+    font-family: "Century Gothic", sans-serif;
 }
 
 #btnLimpiarFiltros {
     padding: 10px 16px;
+    font-family: "Century Gothic", sans-serif;
     border: 1px solid #2563eb;
     border-radius: 6px;
     background-color: white;
@@ -211,12 +271,15 @@ body {
 
 #tablaEquipos {
     width: 100%;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 8px 10px;
 }
 
 th, td {
-    border: 1px solid #d1d5db;
-    padding: 10px;
+    background-color: #fff;
+    padding: 12px 16px;
+    text-align: center;
+    border-radius: 12px;
 }
 
 th {
@@ -230,4 +293,169 @@ td {
 
 tr:hover{
     background-color: #6fa4e4;
+}
+
+
+/* ===== INICIO ===== */
+
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Century Gothic", sans-serif;
+    background-color: #d1f2fb;
+}
+
+/* Encabezado */
+
+.encabezado {
+    height: 80px;
+    background-color: #1a365d;
+    display: flex;
+    align-items: center;
+    padding: 0 30px;
+}
+
+.encabezado h1 {
+    margin: 0;
+    color: #b9e8f3;
+    font-size: 36px;
+    letter-spacing: 2px;
+}
+
+/* Estructura principal */
+
+.contenedor {
+    display: flex;
+    min-height: calc(100vh - 80px);
+}
+
+/* Barra lateral */
+
+.barra-lateral {
+    width: 230px;
+    background-color: #2b5c8f;
+    padding: 25px 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+/* Botones del menú */
+
+.boton-menu {
+    display: block;
+    padding: 13px 20px;
+    border-radius: 25px;
+    background-color: #0066ff;
+    color: white;
+    text-decoration: none;
+    font-size: 17px;
+    transition: 0.2s;
+}
+
+.boton-menu:hover {
+    background-color: #0052cc;
+    transform: translateX(3px);
+}
+
+.boton-menu.activo {
+    background-color: #0052cc;
+}
+
+/* Contenido */
+
+.contenido-inicio {
+    position: relative;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px;
+    overflow: hidden;
+}
+
+.logo-fondo {
+    position: absolute;
+    width: 350px;
+    left: 5px;
+    bottom: 20px;
+    opacity: 0.50;
+    z-index: 0;
+    pointer-events: none;
+}
+
+/* Tarjeta */
+
+.tarjeta-resumen {
+    width: 100%;
+    max-width: 600px;
+    background-color: white;
+    padding: 40px;
+    border-radius: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
+}
+
+/* Datos */
+
+.dato {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 5px;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 18px;
+}
+
+.dato:last-child {
+    border-bottom: none;
+}
+
+.dato span {
+    font-weight: 600;
+}
+
+.dato strong {
+    font-size: 24px;
+}
+
+.contenido-inventario {
+    flex: 1;
+    padding: 40px;
+}
+
+/* Botones de acciones de la tabla */
+
+#tablaEquipos td:last-child button {
+    font-family: "Century Gothic", sans-serif;
+    width: 90px;
+    padding: 8px 0;
+    border: none;
+    border-radius: 10px;
+    color: white;
+    cursor: pointer;
+    margin: 2px;
+    font-size: 14px;
+}
+
+/* Botón Editar */
+
+#tablaEquipos td:last-child button:first-child {
+    background-color: #0066ff;
+}
+
+#tablaEquipos td:last-child button:first-child:hover {
+    background-color: #0052cc;
+}
+
+/* Botón Eliminar */
+
+#tablaEquipos td:last-child button:last-child {
+    background-color: #dc3545;
+}
+
+#tablaEquipos td:last-child button:last-child:hover {
+    background-color: #b02a37;
 }
