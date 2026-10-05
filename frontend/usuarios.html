@@ -1,0 +1,114 @@
+
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>IBIS | Usuarios</title>
+
+    <link rel="stylesheet" href="css/styles.css">
+</head>
+
+<body>
+
+    <header class="encabezado">
+        <h1>IBIS</h1>
+    </header>
+
+    <div class="contenedor">
+
+        <aside class="barra-lateral">
+
+            <a href="index.html" class="boton-menu">
+                Inicio
+            </a>
+
+            <a href="consultar.html" class="boton-menu">
+                Consultar
+            </a>
+
+            <a href="formulario.html" class="boton-menu" data-roles="Administrador,Coordinacion,Area encargada">
+                Agregar equipo
+            </a>
+
+            <a href="usuarios.html" class="boton-menu activo" data-roles="Administrador">
+                Usuarios
+            </a>
+
+            <div id="sesionInfo" class="sesion-info"></div>
+
+        </aside>
+
+        <main class="contenido-inventario">
+
+            <section class="welcome">
+
+                <h2>Registrar usuario</h2>
+
+                <form id="formUsuario">
+
+                    <div class="campo">
+                        <label for="nombre">Nombre completo</label>
+                        <input type="text" id="nombre" name="nombre" maxlength="100" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="correo">Correo</label>
+                        <input type="email" id="correo" name="correo" maxlength="150" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="contrasena">Contraseña</label>
+                        <input type="password" id="contrasena" name="contrasena" minlength="6" required>
+                    </div>
+
+                    <div class="campo">
+                        <label for="id_rol">Rol</label>
+                        <select id="id_rol" name="id_rol" required>
+                            <option value="">Seleccione un rol...</option>
+                        </select>
+                    </div>
+
+                    <button id="btnGuardarUsuario" type="submit">Registrar usuario</button>
+
+                </form>
+
+            </section>
+
+            <section class="listado">
+
+                <h2>Usuarios registrados</h2>
+
+                <div id="listaUsuarios">
+
+                    <table id="tablaUsuarios">
+
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>Correo</th>
+                                <th>Rol</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="cuerpoTablaUsuarios">
+                        </tbody>
+
+                    </table>
+
+                </div>
+
+            </section>
+
+        </main>
+
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/usuarios.js"></script>
+
+</body>
+
+</html>

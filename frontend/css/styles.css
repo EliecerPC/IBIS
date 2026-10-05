@@ -459,3 +459,143 @@ body {
 #tablaEquipos td:last-child button:last-child:hover {
     background-color: #b02a37;
 }
+
+/* ===== LOGIN ===== */
+
+.contenido-login {
+    position: relative;
+    min-height: calc(100vh - 80px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
+    padding: 40px;
+}
+
+.logo-login {
+    position: absolute;
+    width: 320px;
+    left: 40px;
+    bottom: 10px;
+    opacity: 0.35;
+    z-index: 0;
+    pointer-events: none;
+}
+
+.login-card {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 380px;
+    background-color: white;
+    padding: 40px;
+    border-radius: 25px;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
+    text-align: center;
+}
+
+.login-card h2 {
+    margin: 0 0 6px;
+}
+
+.login-subtitulo {
+    margin: 0 0 25px;
+    color: #6b7280;
+    font-size: 14px;
+}
+
+.login-card .campo {
+    text-align: left;
+    margin-bottom: 18px;
+}
+
+.login-card button {
+    width: 100%;
+    padding: 12px;
+    border: none;
+    border-radius: 6px;
+    background-color: #0066ff;
+    color: white;
+    font-size: 16px;
+    cursor: pointer;
+    font-family: "Century Gothic", sans-serif;
+}
+
+.login-card button:hover {
+    background-color: #0052cc;
+}
+
+.login-mensaje {
+    margin-top: 16px;
+    color: #dc3545;
+    font-size: 14px;
+}
+
+/* ===== SESIÓN EN LA BARRA LATERAL ===== */
+
+.sesion-info {
+    margin-top: auto;
+    padding-top: 20px;
+    border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.sesion-usuario {
+    display: flex;
+    flex-direction: column;
+    color: white;
+    margin-bottom: 12px;
+}
+
+.sesion-nombre {
+    font-weight: bold;
+    font-size: 15px;
+}
+
+.sesion-rol {
+    font-size: 13px;
+    opacity: 0.8;
+}
+
+.boton-cerrar-sesion {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    border-radius: 25px;
+    background-color: transparent;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+    font-family: "Century Gothic", sans-serif;
+}
+
+.boton-cerrar-sesion:hover {
+    background-color: rgba(255, 255, 255, 0.15);
+}
+
+/* ===== TABLA DE USUARIOS ===== */
+
+#tablaUsuarios {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 8px 10px;
+}
+
+#tablaUsuarios th,
+#tablaUsuarios td {
+    background-color: #fff;
+    padding: 12px 16px;
+    text-align: center;
+    border-radius: 12px;
+}
+
+#tablaUsuarios th {
+    background-color: #6fa4e4;
+}
+
+#tablaUsuarios tr:hover td {
+    background-color: #e8f1fc;
+}
+
+.contenido-inventario .welcome {
+    margin-bottom: 30px;
+}

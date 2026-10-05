@@ -8,6 +8,17 @@ let idEditando = null;
 
 if (formulario) {
 
+    // Defensa adicional: si alguien sin permisos llega a esta página
+    // escribiendo la URL directamente (el enlace del menú ya está
+    // oculto para su rol), lo devolvemos al listado de consulta.
+    const sesionActual = obtenerSesion();
+
+    if (sesionActual && sesionActual.rol === 'Estudiante') {
+
+        alert('No tiene permisos para registrar o editar equipos.');
+        window.location.href = 'consultar.html';
+    }
+
     const parametros = new URLSearchParams(window.location.search);
     const id = parametros.get('id');
 
@@ -54,9 +65,7 @@ if (formulario) {
 
                 method: metodo,
 
-                headers: {
-                    'Content-Type': 'application/json'
-                },
+                headers: headersConSesion(),
 
                 body: JSON.stringify(equipo)
 
@@ -475,6 +484,23 @@ function renderizarTabla(equipos) {
             document.createElement('td');
 
 
+        // Solo Administrador, Coordinacion y Area encargada pueden
+        // editar o eliminar equipos (ver permisos en el backend).
+        const sesion = obtenerSesion();
+
+        const puedeGestionar =
+            sesion &&
+            ['Administrador', 'Coordinacion', 'Area encargada'].includes(sesion.rol);
+
+        if (!puedeGestionar) {
+
+            celdaAcciones.textContent = '—';
+            fila.appendChild(celdaAcciones);
+            cuerpoTabla.appendChild(fila);
+            return;
+        }
+
+
         /*Botón Editar*/
 
         const botonEditar =
@@ -549,7 +575,8 @@ function renderizarTabla(equipos) {
                                 'http://localhost:3000/api/equipos/' +
                                 id,
                                 {
-                                    method: "DELETE"
+                                    method: "DELETE",
+                                    headers: headersConSesion()
                                 }
                             );
 
