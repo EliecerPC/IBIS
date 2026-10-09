@@ -462,73 +462,167 @@ body {
 
 /* ===== LOGIN ===== */
 
-.contenido-login {
-    position: relative;
-    min-height: calc(100vh - 80px);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    overflow: hidden;
-    padding: 40px;
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
 
-.logo-login {
-    position: absolute;
-    width: 320px;
-    left: 40px;
-    bottom: 10px;
-    opacity: 0.35;
-    z-index: 0;
-    pointer-events: none;
-}
-
-.login-card {
-    position: relative;
-    z-index: 1;
+html, body.login-body {
+    height: 100%;
     width: 100%;
-    max-width: 380px;
-    background-color: white;
-    padding: 40px;
-    border-radius: 25px;
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
-    text-align: center;
+    font-family: "Century Gothic", sans-serif;
+    overflow: hidden;
 }
 
-.login-card h2 {
-    margin: 0 0 6px;
+/* Contenedor principal dividido en 2 columnas */
+.login-container {
+    display: flex;
+    width: 100vw;
+    height: 100vh;
+}
+
+/* --- COLUMNA IZQUIERDA (Fondo azul vivo con la imagen) --- */
+.login-left {
+    flex: 2.5;
+    background-color: #0066da; /* Azul brillante del fondo */
+    display: flex;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 0 40px;
+    overflow: hidden;
+}
+
+.login-left .logo-login {
+    width: 100%;
+    max-width: 650px;
+    max-height: 95vh;
+    object-fit: contain;
+    object-position: bottom center;
+}
+
+/* --- COLUMNA DERECHA (Fondo azul oscuro con formulario) --- */
+.login-right {
+    flex: 1;
+    background-color: #1b365d; /* Azul oscuro */
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0 8% 0 5%;
+}
+
+.login-titulo {
+    font-size: 5rem;
+    font-weight: 800;
+    color: #8bb2f0; /* Azul claro del título IBIS */
+    letter-spacing: 2px;
+    line-height: 1;
+    margin-bottom: 8px;
 }
 
 .login-subtitulo {
-    margin: 0 0 25px;
-    color: #6b7280;
-    font-size: 14px;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 48px;
 }
 
-.login-card .campo {
-    text-align: left;
-    margin-bottom: 18px;
-}
-
-.login-card button {
+.form-login {
     width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 6px;
-    background-color: #0066ff;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    font-family: "Century Gothic", sans-serif;
+    max-width: 420px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
 }
 
-.login-card button:hover {
-    background-color: #0052cc;
+/* Distribución horizontal para Label + Input redondeado */
+.campo-horizontal {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+}
+
+.campo-horizontal label {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #ffffff;
+    min-width: 100px;
+}
+
+.campo-horizontal input {
+    flex: 1;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 20px; /* Tipo cápsula/píldora */
+    font-size: 1rem;
+    outline: none;
+    background-color: #ffffff;
+    color: #1b365d;
+}
+
+/* Botón flotante a la derecha tipo cápsula */
+.contenedor-btn {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 10px;
+}
+
+#btnIngresar {
+    background-color: #0066da; /* Mismo azul que el fondo izquierdo */
+    color: white;
+    border: none;
+    padding: 10px 32px;
+    border-radius: 20px;
+    font-size: 0.95rem;
+    font-weight: bold;
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.1s ease;
+}
+
+#btnIngresar:hover {
+    background-color: #0052b3;
+}
+
+#btnIngresar:active {
+    transform: scale(0.98);
 }
 
 .login-mensaje {
-    margin-top: 16px;
-    color: #dc3545;
-    font-size: 14px;
+    margin-top: 12px;
+    font-size: 0.9rem;
+    color: #f87171; /* Rojo suave para errores */
+}
+
+/* Responsividad para pantallas pequeñas */
+@media (max-width: 850px) {
+    .login-container {
+        flex-direction: column;
+    }
+
+    .login-left {
+        flex: 0.8;
+    }
+
+    .login-right {
+        flex: 1.2;
+        align-items: center;
+        padding: 30px;
+    }
+
+    .campo-horizontal {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 6px;
+    }
+
+    .contenedor-btn {
+        justify-content: center;
+    }
 }
 
 /* ===== SESIÓN EN LA BARRA LATERAL ===== */

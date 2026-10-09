@@ -1,45 +1,41 @@
-
 <!DOCTYPE html>
 <html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
     <title>IBIS | Iniciar sesión</title>
-
     <link rel="stylesheet" href="css/styles.css">
 </head>
 
-<body>
+<body class="login-body">
 
-    <header class="encabezado">
-        <h1>IBIS</h1>
-    </header>
+    <main class="login-container">
+        
+        <!-- Columna Izquierda: Ilustración -->
+        <section class="login-left">
+            <img src="ibis2.svg" alt="Ilustración IBIS" class="logo-login">
+        </section>
 
-    <main class="contenido-login">
+        <!-- Columna Derecha: Formulario -->
+        <section class="login-right">
+            
+            <h1 class="login-titulo">IBIS</h1>
+            <p class="login-subtitulo">Gestión de Inventario</p>
 
-        <img src="ibis.svg" alt="" class="logo-login">
+            <form id="formLogin" class="form-login">
 
-        <section class="login-card">
-
-            <h2>Iniciar sesión</h2>
-            <p class="login-subtitulo">Sistema Web de Gestión de Inventario</p>
-
-            <form id="formLogin">
-
-                <div class="campo">
-                    <label for="correo">Correo</label>
+                <div class="campo-horizontal">
+                    <label for="correo">Usuario</label>
                     <input
                         type="email"
                         id="correo"
                         name="correo"
-                        placeholder="usuario@ut.edu.co"
                         required
                     >
                 </div>
 
-                <div class="campo">
+                <div class="campo-horizontal">
                     <label for="contrasena">Contraseña</label>
                     <input
                         type="password"
@@ -49,7 +45,9 @@
                     >
                 </div>
 
-                <button id="btnIngresar" type="submit">Ingresar</button>
+                <div class="contenedor-btn">
+                    <button id="btnIngresar" type="submit">INGRESAR</button>
+                </div>
 
                 <p id="mensajeLogin" class="login-mensaje" hidden></p>
 

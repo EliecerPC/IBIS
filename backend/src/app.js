@@ -12,22 +12,6 @@ const PORT = 3000;
 // Permite recibir datos en formato JSON
 app.use(express.json());
 
-/**
- * Middleware de permisos por rol.
- *
- * El rol de la persona que hace la petición viaja en el header
- * "x-user-role" (el frontend lo agrega automáticamente después del
- * login, ver js/auth.js). Si el rol no está en la lista de roles
- * permitidos, la petición se rechaza con 403 antes de tocar la base
- * de datos, sin importar si el botón correspondiente estaba oculto
- * o no en la interfaz.
- *
- * Nota: este mecanismo es suficiente para el alcance académico del
- * proyecto, pero no reemplaza un sistema de autenticación robusto
- * (JWT, sesiones firmadas, etc.), ya que el header podría ser
- * falsificado por alguien con conocimientos técnicos. Queda como
- * mejora para una fase futura si el proyecto lo requiere.
- */
 function verificarRol(rolesPermitidos) {
 
     return function (req, res, next) {

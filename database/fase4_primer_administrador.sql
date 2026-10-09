@@ -41,7 +41,7 @@ INSERT INTO usuario (nombre, correo, contrasena, id_rol)
 VALUES (
     'Administrador IBIS',
     'admin@ut.edu.co',
-    '$2a$10$aSadHueJcrN/bqv9oxB8kuN6Z3Fn0tkmPuUPn4dH2LsFMYz3Lmkpu',
+    '$$2a$10$6KOyUi0nhg68AWhppa1VMO0Fh3SGnpGhLpWz0.9s1b1gqFZDuQCYK',
     (SELECT id_rol FROM rol WHERE nombre = 'Administrador')
 );
 
