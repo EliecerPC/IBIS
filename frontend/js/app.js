@@ -716,3 +716,40 @@ if (
     cargarEquipos();
 
 }
+
+/* Cargar los contadores de la página de Inicio */
+async function cargarResumen() {
+    const total = document.getElementById('totalEquipos');
+
+    // Si no estamos en Inicio, no hay contadores que actualizar.
+    if (!total) {
+        return;
+    }
+
+    try {
+        const respuesta = await fetch(
+            'http://localhost:3000/api/resumen'
+        );
+
+        if (!respuesta.ok) {
+            throw new Error('No se pudo obtener el resumen');
+        }
+
+        const resumen = await respuesta.json();
+
+        total.textContent = resumen.total;
+        document.getElementById('equiposDisponibles').textContent =
+            resumen.disponibles;
+        document.getElementById('equiposEnUso').textContent =
+            resumen.en_uso;
+        document.getElementById('equiposMantenimiento').textContent =
+            resumen.en_mantenimiento;
+        document.getElementById('equiposFueraServicio').textContent =
+            resumen.fuera_de_servicio;
+
+    } catch (error) {
+        console.error('Error al cargar el resumen:', error);
+    }
+}
+
+cargarResumen();

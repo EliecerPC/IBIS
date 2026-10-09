@@ -121,13 +121,12 @@
                     <div class="campo">
                         <label for="estado">Estado</label>
 
-                        <input
-                            type="text"
-                            id="estado"
-                            name="estado"
-                            maxlength="30"
-                            required
-                        >
+                        <select id="estado" name="estado" required>
+                            <option value="Disponible">Disponible</option>
+                            <option value="En uso">En uso</option>
+                            <option value="En mantenimiento">En mantenimiento</option>
+                            <option value="Fuera de servicio">Fuera de servicio</option>
+                        </select>
                     </div>
 
                     <div class="campo">

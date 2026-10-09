@@ -46,6 +46,43 @@ app.listen(PORT, () => {
     console.log(`Servidor de IBIS ejecutándose en http://localhost:${PORT}`);
 });
 
+
+
+/* Resumen de equipos para la página de Inicio */
+app.get('/api/resumen', async (req, res) => {
+    try {
+        const consulta = `
+            SELECT
+                COUNT(*) AS total,
+                COUNT(*) FILTER (
+                    WHERE estado = 'Disponible'
+                ) AS disponibles,
+                COUNT(*) FILTER (
+                    WHERE estado = 'En uso'
+                ) AS en_uso,
+                COUNT(*) FILTER (
+                    WHERE estado = 'En mantenimiento'
+                ) AS en_mantenimiento,
+                COUNT(*) FILTER (
+                    WHERE estado = 'Fuera de servicio'
+                ) AS fuera_de_servicio
+            FROM equipo
+        `;
+
+        const resultado = await pool.query(consulta);
+
+        res.json(resultado.rows[0]);
+
+    } catch (error) {
+        console.error('Error al obtener el resumen:', error);
+
+        res.status(500).json({
+            error: 'Error al obtener el resumen de equipos'
+        });
+    }
+});
+
+
 // Consultar todos los equipos (con búsqueda y filtros opcionales)
 app.get('/api/equipos', async (req, res) => {
 
@@ -109,6 +146,8 @@ app.get('/api/equipos/:id', async (req, res) =>{
 // Roles que pueden registrar, editar y eliminar equipos
 const ROLES_GESTION_EQUIPOS = ['Administrador', 'Coordinacion', 'Area encargada'];
 
+const ESTADOS_EQUIPO = ['Disponible', 'En uso', 'En mantenimiento', 'Fuera de servicio'];
+
 //Editar un registro
 app.put('/api/equipos/:id', verificarRol(ROLES_GESTION_EQUIPOS), async (req, res) => {
 
@@ -127,6 +166,11 @@ app.put('/api/equipos/:id', verificarRol(ROLES_GESTION_EQUIPOS), async (req, res
                 ubicacion,
                 observaciones
             } = req.body;
+
+
+            if (!ESTADOS_EQUIPO.includes(estado)) {
+                return res.status(400).json({error: 'El estado del equipo no es válido'});
+            }       
 
         const result = await pool.query(
             `UPDATE equipo
@@ -213,6 +257,10 @@ app.post('/api/equipos', verificarRol(ROLES_GESTION_EQUIPOS), async (req, res) =
             ubicacion,
             observaciones
         } = req.body;
+
+        if (!ESTADOS_EQUIPO.includes(estado)) {
+            return res.status(400).json({error: 'El estado del equipo no es válido'});
+        }
 
         const result = await pool.query(
             `INSERT INTO equipo
@@ -412,3 +460,5 @@ app.post('/api/usuarios', verificarRol(ROLES_ADMIN), async (req, res) => {
     }
 
 });
+
+

@@ -130,13 +130,18 @@ body {
 }
 
 .campo input,
-.campo textarea {
+
+.campo input,
+.campo textarea,
+.campo select {
     padding: 10px;
     border: 1px solid #d1d5db;
     border-radius: 6px;
     font-size: 15px;
     box-sizing: border-box;
+    font-family: "Century Gothic", sans-serif;
 }
+
 
 .campo:last-of-type {
     grid-column: 1 / 3;
