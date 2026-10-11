@@ -46,14 +46,14 @@ if (formulario) {
         if (idEditando === null) {
 
             metodo = "POST";
-            url = 'http://localhost:3000/api/equipos';
+            url = 'https://ibis-aaq7.onrender.com/api/equipos';
 
             console.log("Registrar");
 
         } else {
 
             metodo = "PUT";
-            url = 'http://localhost:3000/api/equipos/' + idEditando;
+            url = 'https://ibis-aaq7.onrender.com/api/equipos/' + idEditando;
 
             console.log("Editar");
         }
@@ -111,7 +111,7 @@ async function cargarEquipoParaEditar(id) {
     try {
 
         const respuesta = await fetch(
-            'http://localhost:3000/api/equipos/' + id
+            'https://ibis-aaq7.onrender.com/api/equipos/' + id
         );
 
         const resultado = await respuesta.json();
@@ -297,7 +297,7 @@ async function cargarEquipos() {
     try {
 
         const respuesta = await fetch(
-            'http://localhost:3000/api/equipos?' +
+            'https://ibis-aaq7.onrender.com/api/equipos?' +
             params.toString()
         );
 
@@ -332,7 +332,7 @@ async function actualizarFiltrosDisponibles() {
     try {
 
         const respuesta = await fetch(
-            'http://localhost:3000/api/equipos'
+            'https://ibis-aaq7.onrender.com/api/equipos'
         );
 
 
@@ -572,7 +572,7 @@ function renderizarTabla(equipos) {
 
                         const respuesta =
                             await fetch(
-                                'http://localhost:3000/api/equipos/' +
+                                'https://ibis-aaq7.onrender.com/api/equipos/' +
                                 id,
                                 {
                                     method: "DELETE",
@@ -728,7 +728,7 @@ async function cargarResumen() {
 
     try {
         const respuesta = await fetch(
-            'http://localhost:3000/api/resumen'
+            'https://ibis-aaq7.onrender.com/api/resumen'
         );
 
         if (!respuesta.ok) {
