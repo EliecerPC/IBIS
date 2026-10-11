@@ -812,3 +812,11 @@ html, body.login-body {
 #tablaAuditoria {
     width: 100%;
 }
+
+
+/* Desplazamiento vertical de la página de Usuarios */
+
+body:has(#listaUsuarios) {
+    overflow-y: auto;
+    min-height: 100vh;
+}
