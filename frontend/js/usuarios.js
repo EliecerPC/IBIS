@@ -2,7 +2,7 @@
 // GESTIÓN DE USUARIOS - solo rol Administrador
 // =============================================
 
-const URL_API_USUARIOS = 'http://localhost:3000';
+const URL_API_USUARIOS = 'https://ibis-aaq7.onrender.com';
 
 // Defensa adicional: aunque el enlace del menú está oculto para
 // quien no es Administrador, si alguien escribe la URL directamente
