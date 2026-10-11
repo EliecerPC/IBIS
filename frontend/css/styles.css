@@ -698,3 +698,10 @@ html, body.login-body {
 .contenido-inventario .welcome {
     margin-bottom: 30px;
 }
+
+
+#tablaAuditoria {
+    width: 100%;
+    table-layout: auto;
+    border-collapse: collapse;
+}

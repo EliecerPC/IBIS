@@ -27,3 +27,24 @@ CREATE TABLE equipo (
     ubicacion VARCHAR(100) NOT NULL,
     observaciones TEXT
 );
+
+
+CREATE TABLE IF NOT EXISTS auditoria (
+    id_auditoria SERIAL PRIMARY KEY,
+
+    id_usuario INTEGER
+        REFERENCES usuario(id_usuario)
+        ON DELETE SET NULL,
+
+    id_equipo INTEGER
+        REFERENCES equipo(id_equipo)
+        ON DELETE SET NULL,
+
+    accion VARCHAR(20) NOT NULL
+        CHECK (accion IN ('INSERTAR', 'EDITAR', 'ELIMINAR')),
+
+    fecha_hora TIMESTAMP WITH TIME ZONE
+        NOT NULL DEFAULT CURRENT_TIMESTAMP,
+
+    detalles JSONB NOT NULL DEFAULT '{}'::jsonb
+);

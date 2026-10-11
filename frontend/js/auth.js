@@ -54,10 +54,15 @@ function headersConSesion() {
 
     const sesion = obtenerSesion();
 
+    
     return {
         'Content-Type': 'application/json',
-        'x-user-role': sesion ? sesion.rol : ''
+        'x-user-role': sesion ? sesion.rol : '',
+        'Authorization': sesion && sesion.token
+            ? `Bearer ${sesion.token}`
+            : ''
     };
+
 }
 
 /**
@@ -148,7 +153,9 @@ if (formularioLogin) {
                 return;
             }
 
-            guardarSesion(resultado.usuario);
+            guardarSesion({
+                ...resultado.usuario, token: resultado.token
+            });
             window.location.href = 'index.html';
 
         } catch (error) {
