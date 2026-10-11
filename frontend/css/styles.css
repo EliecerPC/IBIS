@@ -816,7 +816,29 @@ html, body.login-body {
 
 /* Desplazamiento vertical de la página de Usuarios */
 
-body:has(#listaUsuarios) {
+
+/* ===== DESPLAZAMIENTO VERTICAL DE USUARIOS ===== */
+
+html:has(#listaUsuarios) {
     overflow-y: auto;
-    min-height: 100vh;
 }
+
+body:has(#listaUsuarios) {
+    height: auto;
+    min-height: 100vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+body:has(#listaUsuarios) .contenedor {
+    min-height: calc(100vh - 80px);
+    height: auto;
+    align-items: stretch;
+}
+
+body:has(#listaUsuarios) .contenido-inventario {
+    min-width: 0;
+    min-height: 0;
+    overflow: visible;
+}
+
