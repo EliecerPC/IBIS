@@ -1,5 +1,5 @@
 
-const URL_API_AUDITORIA = 'http://localhost:3000/api/auditoria';
+const URL_API_AUDITORIA = 'https://ibis-aaq7.onrender.com/api/auditoria';
 
 
 function generarDetallesLegibles(registro) {
