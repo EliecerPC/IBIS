@@ -16,7 +16,8 @@
 // como un objeto { id_usuario, nombre, correo, id_rol, rol }.
 
 const CLAVE_SESION = 'ibisUsuario';
-const URL_API = 'http://localhost:3000';
+const URL_API = 'https://ibis-aaq7.onrender.com';
+
 
 /** Devuelve el usuario con sesión iniciada, o null si no hay sesión. */
 function obtenerSesion() {
