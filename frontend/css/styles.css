@@ -703,5 +703,20 @@ html, body.login-body {
 #tablaAuditoria {
     width: 100%;
     table-layout: auto;
-    border-collapse: collapse;
+    border-collapse: separate;
+    border-spacing: 8px 10px;
+}
+
+.contenedor-tabla-auditoria {
+    width: 100%;
+    height: calc(100vh - 300px);
+    min-height: 300px;
+    overflow-y: auto;
+    overflow-x: auto;
+}
+
+#tablaAuditoria thead th {
+    position: sticky;
+    top: 0;
+    z-index: 1;
 }
