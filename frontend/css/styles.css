@@ -842,3 +842,6 @@ body:has(#listaUsuarios) .contenido-inventario {
     overflow: visible;
 }
 
+body {
+zoom: 0.8;
+}
