@@ -841,7 +841,3 @@ body:has(#listaUsuarios) .contenido-inventario {
     min-height: 0;
     overflow: visible;
 }
-
-body {
-zoom: 0.8;
-}
