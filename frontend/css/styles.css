@@ -720,3 +720,65 @@ html, body.login-body {
     top: 0;
     z-index: 1;
 }
+
+
+/* ===== AJUSTES DEL FORMULARIO DE EQUIPOS ===== */
+
+.contenido-inventario {
+    min-width: 0;
+}
+
+.contenido-inventario .welcome {
+    padding: 28px;
+}
+
+#formEquipo {
+    gap: 14px 20px;
+    margin-top: 20px;
+}
+
+.campo textarea {
+    min-height: 70px;
+}
+
+#formEquipo button {
+    margin-top: 8px;
+}
+
+/* Ajustes para pantallas medianas */
+@media (max-width: 900px) {
+    .contenido-inventario {
+        padding: 24px;
+    }
+
+    .contenido-inventario .welcome {
+        padding: 22px;
+    }
+}
+
+/* Ajustes para pantallas con poca altura */
+@media (max-height: 800px) and (min-width: 601px) {
+    .contenido-inventario {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    .contenido-inventario .welcome {
+        padding-top: 20px;
+        padding-bottom: 20px;
+    }
+
+    #formEquipo {
+        gap: 10px 16px;
+        margin-top: 16px;
+    }
+
+    .campo textarea {
+        min-height: 56px;
+    }
+
+    #formEquipo button {
+        margin-top: 4px;
+        padding: 10px;
+    }
+}
