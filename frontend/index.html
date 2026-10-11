@@ -3,6 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+        // Verificar la sesión antes de que el navegador dibuje el panel.
+        (function () {
+            try {
+                const sesion = localStorage.getItem('ibisUsuario');
+                if (!sesion || !JSON.parse(sesion)) {
+                    window.location.replace('login.html');
+                }
+            } catch (error) {
+                window.location.replace('login.html');
+            }
+        })();
+    </script>
     <title>IBIS - Inicio</title>
     <link rel="stylesheet" href="css/styles.css">
 </head>
