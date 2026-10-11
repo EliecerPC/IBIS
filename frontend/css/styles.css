@@ -13,7 +13,7 @@ body {
 /*Encabezado*/
 .encabezado {
     width: 100%;
-    height: 80px;
+    height: 60px;
     background-color: #1e3a5f;
     display: flex;
     align-items: center;
@@ -32,14 +32,7 @@ body {
     min-height: calc(100vh - 80px);
 }
 
-.barra-lateral {
-    width: 230px;
-    background-color: #2b5c8f;
-    padding: 25px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-}
+
 
 .boton-menu {
     display: block;
@@ -278,6 +271,7 @@ body {
     width: 100%;
     border-collapse: separate;
     border-spacing: 8px 10px;
+    font-size: 13px;
 }
 
 th, td {
@@ -290,6 +284,9 @@ th, td {
 th {
     background-color: #6fa4e4;
     text-align: center;
+    position: sticky;
+    top: 0;
+    z-index: 2;
 }
 
 td {
@@ -314,7 +311,7 @@ body {
 }
 
 /* Encabezado */
-
+/*
 .encabezado {
     height: 80px;
     background-color: #1a365d;
@@ -329,7 +326,7 @@ body {
     font-size: 36px;
     letter-spacing: 2px;
 }
-
+*/
 /* Estructura principal */
 
 .contenedor {
@@ -340,7 +337,9 @@ body {
 /* Barra lateral */
 
 .barra-lateral {
-    width: 230px;
+    width: 200px;
+    align-self: stretch;
+    min-height: calc(100vh - 60px);
     background-color: #2b5c8f;
     padding: 25px 20px;
     display: flex;
@@ -357,7 +356,7 @@ body {
     background-color: #0066ff;
     color: white;
     text-decoration: none;
-    font-size: 17px;
+    font-size: 15px;
     transition: 0.2s;
 }
 
@@ -395,12 +394,16 @@ body {
 /* Tarjeta */
 
 .tarjeta-resumen {
-    width: 100%;
-    max-width: 600px;
+    width: 85%;
+    max-width: 450px;
     background-color: white;
-    padding: 40px;
-    border-radius: 25px;
+    padding: 25px;
+    border-radius: 20px;
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.12);
+
+    position: relative;
+    z-index: 2;
+    margin-left: -50px;
 }
 
 /* Datos */
@@ -699,7 +702,6 @@ html, body.login-body {
     margin-bottom: 30px;
 }
 
-
 #tablaAuditoria {
     width: 100%;
     table-layout: auto;
@@ -707,19 +709,18 @@ html, body.login-body {
     border-spacing: 8px 10px;
 }
 
-.contenedor-tabla-auditoria {
-    width: 100%;
-    height: calc(100vh - 300px);
-    min-height: 300px;
+/* Permitir desplazamiento dentro del contenido */
+body:has(#tablaAuditoria) .contenido-inventario {
+    height: calc(100vh - 60px);
+    min-height: 0;
     overflow-y: auto;
-    overflow-x: auto;
 }
 
-#tablaAuditoria thead th {
-    position: sticky;
-    top: 0;
-    z-index: 1;
+/* Desplazamiento vertical de la tabla de auditoría */
+#tablaAuditoria {
+    width: 100%;
 }
+
 
 
 /* ===== AJUSTES DEL FORMULARIO DE EQUIPOS ===== */
@@ -809,9 +810,7 @@ html, body.login-body {
     overflow-wrap: anywhere;
 }
 
-#tablaAuditoria {
-    width: 100%;
-}
+
 
 
 /* Desplazamiento vertical de la página de Usuarios */
@@ -836,8 +835,48 @@ body:has(#listaUsuarios) .contenedor {
     align-items: stretch;
 }
 
+
+
 body:has(#listaUsuarios) .contenido-inventario {
-    min-width: 0;
+    height: calc(100vh - 60px);
+    overflow-y: auto;
     min-height: 0;
-    overflow: visible;
+}
+
+
+/* ===== FORMULARIO DE REGISTRO DE USUARIOS ===== */
+
+#formUsuario {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px 20px;
+    margin-top: 15px;
+}
+
+/* Cada campo ocupa una columna */
+#formUsuario .campo {
+    min-width: 0;
+}
+
+/* El rol ya no ocupa todo el ancho */
+#formUsuario .campo:last-of-type {
+    grid-column: auto;
+}
+
+/* Botón centrado debajo de las dos columnas */
+#formUsuario button {
+    grid-column: 1 / -1;
+    justify-self: start;
+    margin-top: 5px;
+}
+
+/* En pantallas pequeñas, una columna */
+@media (max-width: 600px) {
+    #formUsuario {
+        grid-template-columns: 1fr;
+    }
+
+    #formUsuario button {
+        grid-column: 1;
+    }
 }
