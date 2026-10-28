@@ -1,16 +1,16 @@
 console.log("Frontend de IBIS funcionando");
 
+// Referencias a los elementos del formulario de equipos.
 const formulario = document.getElementById('formEquipo');
 const botonFormulario = document.getElementById('btnGuardar');
 const tituloFormulario = document.getElementById('id_h2');
 
 let idEditando = null;
 
+// Configura el formulario para registrar o editar equipos.
 if (formulario) {
 
-    // Defensa adicional: si alguien sin permisos llega a esta página
-    // escribiendo la URL directamente (el enlace del menú ya está
-    // oculto para su rol), lo devolvemos al listado de consulta.
+    // Impide que los estudiantes accedan al formulario de gestión.
     const sesionActual = obtenerSesion();
 
     if (sesionActual && sesionActual.rol === 'Estudiante') {
@@ -31,7 +31,7 @@ if (formulario) {
         cargarEquipoParaEditar(id);
     }
 
-
+    // Envía los datos del formulario para registrar o actualizar un equipo.
     formulario.addEventListener('submit', async function(event) {
 
         event.preventDefault();
@@ -43,6 +43,7 @@ if (formulario) {
         let metodo;
         let url;
 
+        // Selecciona el método HTTP según la operación que se realizará.
         if (idEditando === null) {
 
             metodo = "POST";
@@ -105,7 +106,7 @@ if (formulario) {
 
 }
 
-
+// Consulta un equipo por su identificador y carga sus datos en el formulario.
 async function cargarEquipoParaEditar(id) {
 
     try {
@@ -182,7 +183,7 @@ const filtroEstado = document.getElementById('filtroEstado');
 const botonLimpiarFiltros = document.getElementById('btnLimpiarFiltros');
 
 
-
+// Retrasa la búsqueda hasta que el usuario deja de escribir.
 function debounce(fn, espera) {
 
     let temporizador;
@@ -200,7 +201,7 @@ function debounce(fn, espera) {
 }
 
 
-
+// Genera las opciones de los filtros según los tipos y estados disponibles.
 function actualizarOpcionesFiltro(equipos) {
 
     if (!filtroTipo || !filtroEstado) {
@@ -256,7 +257,7 @@ function actualizarOpcionesFiltro(equipos) {
 
 }
 
-
+// Consulta los equipos aplicando los criterios de búsqueda y filtros.
 async function cargarEquipos() {
 
     if (
@@ -322,6 +323,7 @@ async function cargarEquipos() {
 
 }
 
+// Actualiza las opciones de los filtros según los equipos registrados.
 async function actualizarFiltrosDisponibles() {
 
     if (!filtroTipo || !filtroEstado) {
@@ -353,7 +355,7 @@ async function actualizarFiltrosDisponibles() {
 
 }
 
-
+// Construye la tabla con los equipos consultados y sus acciones disponibles.
 function renderizarTabla(equipos) {
 
     if (!cuerpoTabla) {
@@ -536,7 +538,7 @@ function renderizarTabla(equipos) {
         fila.appendChild(celdaAcciones);
 
 
-
+        // Redirige al formulario con el identificador del equipo seleccionado.
         botonEditar.addEventListener(
             'click',
             function(event) {
@@ -551,7 +553,7 @@ function renderizarTabla(equipos) {
             }
         );
 
-
+        // Solicita confirmación y elimina el equipo mediante el backend.
         botonEliminar.addEventListener(
             'click',
             async function(event) {
@@ -638,7 +640,7 @@ function renderizarTabla(equipos) {
 }
 
 
-
+// Configura los eventos de búsqueda, filtrado y limpieza de criterios.
 if (
     campoBuscar &&
     botonBuscar &&
@@ -710,7 +712,7 @@ if (
     );
 
 
-
+    // Carga los filtros y muestra los equipos al abrir la página.
     actualizarFiltrosDisponibles();
 
     cargarEquipos();

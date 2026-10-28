@@ -1,12 +1,7 @@
-// =============================================
-// GESTIÓN DE USUARIOS - solo rol Administrador
-// =============================================
-
+// Define la dirección del servidor para las operaciones con usuarios.
 const URL_API_USUARIOS = 'https://ibis-aaq7.onrender.com';
 
-// Defensa adicional: aunque el enlace del menú está oculto para
-// quien no es Administrador, si alguien escribe la URL directamente
-// lo sacamos de esta página.
+// Obtiene los datos del usuario que tiene la sesión activa.
 const sesionUsuarios = obtenerSesion();
 
 if (sesionUsuarios && sesionUsuarios.rol !== 'Administrador') {
@@ -15,14 +10,17 @@ if (sesionUsuarios && sesionUsuarios.rol !== 'Administrador') {
     window.location.href = 'index.html';
 }
 
+// Identifica el formulario, el selector de roles y la tabla de usuarios.
 const formularioUsuario = document.getElementById('formUsuario');
 const selectRol = document.getElementById('id_rol');
 const cuerpoTablaUsuarios = document.getElementById('cuerpoTablaUsuarios');
 
+// Consulta los roles disponibles para asignarlos a nuevos usuarios.
 async function cargarRoles() {
 
     try {
 
+        // Solicita los roles al servidor utilizando los datos de la sesión.
         const respuesta = await fetch(URL_API_USUARIOS + '/api/roles', {
             headers: headersConSesion()
         });
@@ -34,6 +32,7 @@ async function cargarRoles() {
             return;
         }
 
+        // Genera las opciones del selector con los roles recibidos.
         selectRol.innerHTML =
             '<option value="">Seleccione un rol...</option>' +
             roles.map(r => `<option value="${r.id_rol}">${r.nombre}</option>`).join('');
@@ -43,10 +42,12 @@ async function cargarRoles() {
     }
 }
 
+// Consulta los usuarios registrados para mostrarlos en la tabla.
 async function cargarUsuarios() {
 
     try {
 
+        // Solicita la lista de usuarios al servidor.
         const respuesta = await fetch(URL_API_USUARIOS + '/api/usuarios', {
             headers: headersConSesion()
         });
@@ -58,12 +59,15 @@ async function cargarUsuarios() {
             return;
         }
 
+        // Limpia la tabla antes de mostrar los resultados actualizados.
         cuerpoTablaUsuarios.textContent = '';
 
+        // Recorre los usuarios para construir las filas de la tabla.
         usuarios.forEach(function (usuario) {
 
             const fila = document.createElement('tr');
 
+            // Crea las celdas con el nombre, correo y rol de cada usuario.
             const celdaNombre = document.createElement('td');
             celdaNombre.textContent = usuario.nombre;
             fila.appendChild(celdaNombre);
@@ -84,15 +88,18 @@ async function cargarUsuarios() {
     }
 }
 
+// Procesa el formulario para registrar un nuevo usuario.
 formularioUsuario.addEventListener('submit', async function (event) {
 
     event.preventDefault();
 
+    // Recopila los datos ingresados y los organiza en un objeto.
     const datos = new FormData(formularioUsuario);
     const usuario = Object.fromEntries(datos.entries());
 
     try {
 
+        // Envía los datos del nuevo usuario al servidor.
         const respuesta = await fetch(URL_API_USUARIOS + '/api/usuarios', {
             method: 'POST',
             headers: headersConSesion(),
@@ -101,6 +108,7 @@ formularioUsuario.addEventListener('submit', async function (event) {
 
         const resultado = await respuesta.json();
 
+        // Confirma el registro y actualiza la tabla de usuarios.
         if (respuesta.ok) {
 
             alert(resultado.mensaje);
@@ -112,6 +120,7 @@ formularioUsuario.addEventListener('submit', async function (event) {
             alert('Error: ' + resultado.error);
         }
 
+        // Informa si ocurre un error durante el registro del usuario.
     } catch (error) {
 
         console.error('Error al registrar usuario:', error);
@@ -120,5 +129,6 @@ formularioUsuario.addEventListener('submit', async function (event) {
 
 });
 
+// Carga los roles disponibles y los usuarios al abrir la página.
 cargarRoles();
 cargarUsuarios();

@@ -1,3 +1,4 @@
+// Importar las dependencias necesarias para el servidor
 const express = require('express');
 const pool = require('./db');
 const cors = require('cors');
@@ -5,6 +6,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const app = express();
+// Permite las solicitudes del frontend hacia el backend.
 app.use(cors());
 
 
@@ -13,7 +15,7 @@ const PORT = 3000;
 // Permite recibir datos en formato JSON
 app.use(express.json());
 
-
+// Verifica el token JWT enviado en la solicitud para identificar al usuario
 function verificarToken(req, res, next) {
     const encabezado = req.headers.authorization;
 
@@ -42,7 +44,7 @@ function verificarToken(req, res, next) {
 }
 
 
-
+// Comprueba que el usuario autenticado tenga uno de los roles autorizados
 function verificarRolAutenticado(rolesPermitidos) {
     return function (req, res, next) {
         if (!req.usuario) {
@@ -62,7 +64,7 @@ function verificarRolAutenticado(rolesPermitidos) {
 }
 
 
-
+// Comprueba el rol enviado, se utiliza en las rutas de gestión de usuarios y roles.
 function verificarRol(rolesPermitidos) {
 
     return function (req, res, next) {
@@ -134,13 +136,14 @@ app.get('/api/resumen', async (req, res) => {
 });
 
 
-// Consultar todos los equipos (con búsqueda y filtros opcionales)
+// Consulta los equipos registrados y permite aplicar una búsqueda por texto y filtros por tipo y estado.
 app.get('/api/equipos', async (req, res) => {
 
     try {
 
         const { buscar, tipo, estado } = req.query;
 
+        // Construye la consulta SQL y almacena los valores de los filtros para enviarlos como parámetros y evitar concatenar datos del usuario.
         let query = 'SELECT * FROM equipo WHERE 1=1';
         const valores = [];
 
@@ -169,6 +172,7 @@ app.get('/api/equipos', async (req, res) => {
             query += ` AND estado = $${valores.length}`;
         }
 
+        // Ordena los equipos desde el registro más reciente hasta el más antiguo.
         query += ' ORDER BY id_equipo DESC';
 
         const result = await pool.query(query, valores);
@@ -187,6 +191,7 @@ app.get('/api/equipos', async (req, res) => {
 
 });
 
+// Consulta un equipo específico mediante su identificador.
 app.get('/api/equipos/:id', async (req, res) =>{
     const id = req.params.id;
     const result = await pool.query('SELECT * FROM equipo WHERE id_equipo = $1', [id]);
@@ -194,13 +199,12 @@ app.get('/api/equipos/:id', async (req, res) =>{
     res.json(result.rows);
 });
 
-// Roles que pueden registrar, editar y eliminar equipos
+// Define los roles autorizados para gestionar equipos y los estados válidos.
 const ROLES_GESTION_EQUIPOS = ['Administrador', 'Coordinacion', 'Area encargada'];
-
 const ESTADOS_EQUIPO = ['Disponible', 'En uso', 'En mantenimiento', 'Fuera de servicio'];
 
 //Editar un registro
-
+// Actualiza un equipo, registra los datos anteriores y nuevos en la auditoría
 app.put('/api/equipos/:id', verificarToken, verificarRolAutenticado(ROLES_GESTION_EQUIPOS), async (req, res) => {
     const client = await pool.connect();
     let transaccionIniciada = false;
@@ -323,8 +327,8 @@ app.put('/api/equipos/:id', verificarToken, verificarRolAutenticado(ROLES_GESTIO
     }
 });
 
-//Eliminar un registro
 
+//Eliminar un registro
 app.delete('/api/equipos/:id', verificarToken, verificarRolAutenticado(ROLES_GESTION_EQUIPOS), async (req, res) => {
     const client = await pool.connect();
     let transaccionIniciada = false;
@@ -406,8 +410,7 @@ app.delete('/api/equipos/:id', verificarToken, verificarRolAutenticado(ROLES_GES
 });
 
 
-// Registrar un nuevo equipo
-
+// Registra un equipo nuevo y guarda la operación en la auditoría.
 app.post('/api/equipos', verificarToken, verificarRolAutenticado(ROLES_GESTION_EQUIPOS), async (req, res) => {
     const client = await pool.connect();
 
@@ -504,16 +507,11 @@ app.post('/api/equipos', verificarToken, verificarRolAutenticado(ROLES_GESTION_E
     }
 });
 
-
-// =============================================
-// AUTENTICACIÓN, USUARIOS Y ROLES
-// =============================================
-
 // Solo el Administrador puede ver y crear usuarios
 const ROLES_ADMIN = ['Administrador'];
 
 
-/* Consultar historial de auditoría: solo Administrador */
+// Permite al administrador consultar el historial de operaciones
 app.get(
     '/api/auditoria',
     verificarToken,

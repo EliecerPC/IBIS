@@ -1,20 +1,4 @@
-// =============================================
-// AUTENTICACIÓN Y CONTROL DE SESIÓN - IBIS
-// =============================================
-//
-// Este archivo se incluye en TODAS las páginas (antes que app.js).
-// Se encarga de:
-//   1. Manejar el formulario de login (solo existe en login.html).
-//   2. Proteger el resto de páginas: si no hay sesión iniciada,
-//      redirige a login.html.
-//   3. Mostrar el nombre/rol del usuario y el botón de cerrar sesión
-//      en la barra lateral.
-//   4. Ocultar los elementos del menú o de la interfaz que el rol
-//      actual no tiene permitido usar (data-roles="...").
-//
-// La sesión se guarda en localStorage, bajo la clave "ibisUsuario",
-// como un objeto { id_usuario, nombre, correo, id_rol, rol }.
-
+// Define las claves utilizadas para la sesión y las peticiones al servidor.
 const CLAVE_SESION = 'ibisUsuario';
 const URL_API = 'https://ibis-aaq7.onrender.com';
 
@@ -22,12 +6,14 @@ const URL_API = 'https://ibis-aaq7.onrender.com';
 /** Devuelve el usuario con sesión iniciada, o null si no hay sesión. */
 function obtenerSesion() {
 
+    // Recupera los datos de la sesión almacenada en el navegador.
     const datos = localStorage.getItem(CLAVE_SESION);
 
     if (!datos) {
         return null;
     }
 
+    // Convierte los datos almacenados en un objeto.
     try {
         return JSON.parse(datos);
     } catch (error) {
@@ -35,27 +21,23 @@ function obtenerSesion() {
     }
 }
 
-/** Guarda la sesión del usuario que acaba de iniciar sesión. */
+/*Guarda la sesión del usuario que acaba de iniciar sesión. */
 function guardarSesion(usuario) {
     localStorage.setItem(CLAVE_SESION, JSON.stringify(usuario));
 }
 
-/** Cierra la sesión actual y regresa a la pantalla de login. */
+/*Cierra la sesión actual y regresa a la pantalla de login. */
 function cerrarSesion() {
     localStorage.removeItem(CLAVE_SESION);
     window.location.href = 'login.html';
 }
 
-/**
- * Headers listos para usar en fetch() en las peticiones que
- * necesitan identificar el rol del usuario (POST/PUT/DELETE de
- * equipos, gestión de usuarios, etc.).
- */
+/*Headers listos para usar en fetch() en las peticiones que necesitan identificar el rol del usuario*/
 function headersConSesion() {
 
     const sesion = obtenerSesion();
 
-    
+    // Prepara los encabezados necesarios para las peticiones autenticadas.
     return {
         'Content-Type': 'application/json',
         'x-user-role': sesion ? sesion.rol : '',
@@ -66,11 +48,7 @@ function headersConSesion() {
 
 }
 
-/**
- * Oculta todo elemento con el atributo data-roles cuyo rol actual
- * no esté incluido en la lista (separada por comas). Por ejemplo:
- * <a data-roles="Administrador,Coordinacion">Agregar equipo</a>
- */
+/*Oculta todo elemento con el atributo data-roles cuyo rol actual no esté incluido en la lista*/
 function aplicarPermisosUI() {
 
     const sesion = obtenerSesion();
@@ -79,6 +57,7 @@ function aplicarPermisosUI() {
         return;
     }
 
+    // Recorre los elementos que tienen permisos asociados a roles.
     document.querySelectorAll('[data-roles]').forEach(function (elemento) {
 
         const rolesPermitidos = elemento
@@ -86,6 +65,7 @@ function aplicarPermisosUI() {
             .split(',')
             .map(r => r.trim());
 
+            // Oculta los elementos que no corresponden al rol de la sesión.
         if (!rolesPermitidos.includes(sesion.rol)) {
             elemento.style.display = 'none';
         }
@@ -102,6 +82,7 @@ function mostrarInfoSesion() {
         return;
     }
 
+    // Muestra el nombre, el rol y el botón para cerrar sesión.
     contenedor.innerHTML = `
         <div class="sesion-usuario">
             <span class="sesion-nombre">${sesion.nombre}</span>
@@ -112,22 +93,24 @@ function mostrarInfoSesion() {
         </button>
     `;
 
+    // Asocia el botón con la función de cierre de sesión.
     document
         .getElementById('btnCerrarSesion')
         .addEventListener('click', cerrarSesion);
 }
 
-// ---------- Lógica propia de login.html ----------
 
+// Identifica el formulario de inicio de sesión, si existe en la página.
 const formularioLogin = document.getElementById('formLogin');
 
 if (formularioLogin) {
 
-    // Si ya hay una sesión activa, no tiene sentido ver el login de nuevo
+    // Si ya hay una sesión activa no muestra el login de nuevo
     if (obtenerSesion()) {
         window.location.href = 'index.html';
     }
 
+    // Procesa las credenciales ingresadas y solicita la autenticación al servidor.
     formularioLogin.addEventListener('submit', async function (event) {
 
         event.preventDefault();
@@ -140,6 +123,7 @@ if (formularioLogin) {
 
         try {
 
+            // Envía el correo y la contraseña al servicio de autenticación.
             const respuesta = await fetch(URL_API + '/api/login', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
@@ -148,17 +132,20 @@ if (formularioLogin) {
 
             const resultado = await respuesta.json();
 
+            // Muestra el mensaje recibido si las credenciales no son válidas.
             if (!respuesta.ok) {
                 mensaje.textContent = resultado.error || 'No se pudo iniciar sesión';
                 mensaje.hidden = false;
                 return;
             }
 
+            // Guarda los datos del usuario y el token de autenticación.
             guardarSesion({
                 ...resultado.usuario, token: resultado.token
             });
             window.location.href = 'index.html';
 
+            // Informa si ocurre un error de conexión con el servidor.
         } catch (error) {
 
             console.error('Error al iniciar sesión:', error);
@@ -169,16 +156,13 @@ if (formularioLogin) {
     });
 
 } else {
-
-    // ---------- Protección del resto de páginas ----------
-    // Cualquier página que no sea login.html requiere sesión iniciada.
-
+    // Redirige al login cuando no existe una sesión activa.
     if (!obtenerSesion()) {
 
         window.location.href = 'login.html';
 
     } else {
-
+        // Muestra la sesión y aplica los permisos cuando la página está lista.
         document.addEventListener('DOMContentLoaded', function () {
             mostrarInfoSesion();
             aplicarPermisosUI();

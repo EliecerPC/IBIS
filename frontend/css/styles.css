@@ -298,7 +298,7 @@ tr:hover{
 }
 
 
-/* ===== INICIO ===== */
+/* INICIO */
 
 * {
     box-sizing: border-box;
@@ -310,23 +310,7 @@ body {
     background-color: #d1f2fb;
 }
 
-/* Encabezado */
-/*
-.encabezado {
-    height: 80px;
-    background-color: #1a365d;
-    display: flex;
-    align-items: center;
-    padding: 0 30px;
-}
 
-.encabezado h1 {
-    margin: 0;
-    color: #b9e8f3;
-    font-size: 36px;
-    letter-spacing: 2px;
-}
-*/
 /* Estructura principal */
 
 .contenedor {
@@ -468,7 +452,7 @@ body {
     background-color: #b02a37;
 }
 
-/* ===== LOGIN ===== */
+/*LOGIN*/
 
 
 * {
@@ -491,7 +475,7 @@ html, body.login-body {
     height: 100vh;
 }
 
-/* --- COLUMNA IZQUIERDA (Fondo azul vivo con la imagen) --- */
+/*COLUMNA IZQUIERDA*/
 .login-left {
     flex: 2.5;
     background-color: #0066da; /* Azul brillante del fondo */
@@ -510,7 +494,7 @@ html, body.login-body {
     object-position: bottom center;
 }
 
-/* --- COLUMNA DERECHA (Fondo azul oscuro con formulario) --- */
+/*COLUMNA DERECHA*/
 .login-right {
     flex: 1;
     background-color: #1b365d; /* Azul oscuro */
@@ -633,7 +617,7 @@ html, body.login-body {
     }
 }
 
-/* ===== SESIÓN EN LA BARRA LATERAL ===== */
+/*SESIÓN EN LA BARRA LATERAL*/
 
 .sesion-info {
     margin-top: auto;
@@ -674,7 +658,7 @@ html, body.login-body {
     background-color: rgba(255, 255, 255, 0.15);
 }
 
-/* ===== TABLA DE USUARIOS ===== */
+/*TABLA DE USUARIOS*/
 
 #tablaUsuarios {
     width: 100%;
@@ -723,7 +707,7 @@ body:has(#tablaAuditoria) .contenido-inventario {
 
 
 
-/* ===== AJUSTES DEL FORMULARIO DE EQUIPOS ===== */
+/*AJUSTES DEL FORMULARIO DE EQUIPOS */
 
 .contenido-inventario {
     min-width: 0;
@@ -784,7 +768,7 @@ body:has(#tablaAuditoria) .contenido-inventario {
     }
 }
 
-/* ===== DESPLAZAMIENTO DE LAS TABLAS ===== */
+/*DESPLAZAMIENTO DE LAS TABLAS*/
 
 #listaUsuarios,
 #listaEquipos {
@@ -816,8 +800,6 @@ body:has(#tablaAuditoria) .contenido-inventario {
 /* Desplazamiento vertical de la página de Usuarios */
 
 
-/* ===== DESPLAZAMIENTO VERTICAL DE USUARIOS ===== */
-
 html:has(#listaUsuarios) {
     overflow-y: auto;
 }
@@ -844,7 +826,7 @@ body:has(#listaUsuarios) .contenido-inventario {
 }
 
 
-/* ===== FORMULARIO DE REGISTRO DE USUARIOS ===== */
+/* FORMULARIO DE REGISTRO DE USUARIOS */
 
 #formUsuario {
     display: grid;
